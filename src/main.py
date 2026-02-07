@@ -7,6 +7,10 @@ from src.metrics.latency import LatencyMetric
 from src.report.formatter import JsonReportFormatter
 from src.config.loader import load_config
 from src.metrics.registry import METRIC_REGISTRY
+import logging
+
+
+logging.basicConfig(level=logging.INFO)
 
 
 
