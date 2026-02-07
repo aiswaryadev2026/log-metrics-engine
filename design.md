@@ -139,7 +139,7 @@ Default metrics when `--config` is omitted: `request_count`, `error_rate`,
 
 ## Future work (prioritized)
 
-1. Add bounded-memory/approximate quantiles for latency metrics.
-2. Support additional output formats (CSV, Prometheus exposition).
-3. Add time-windowed metrics and grouping by path/method.
-4. Add CLI flags for fault-tolerant parsing and verbosity.
+- Additional output formats (CSV, Prometheus)
+- Configurable log formats
+- Plugin-based metric loading
+- Continuous integration setup
