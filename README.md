@@ -1,47 +1,62 @@
 # log-metrics-engine
-Build a configurable log analysis system that parses application logs and generates metrics
-# Log Metrics Engine
 
 A streaming log analyzer written in Python that parses application logs and
-generates useful metrics such as request count, error rate, and latency
+generates configurable metrics such as request count, error rate, and latency
 percentiles.
 
-## Goals
-- Process large log files efficiently using streaming
-- Generate configurable metrics
-- Keep the system extensible and testable
-- Follow clean architecture principles
+## Features
+- Stream large log files efficiently
+- Configure which metrics to compute via YAML
+- Extensible metric registry for easy addition of new metrics
+- Small, well-tested codebase
 
-## Example Metrics
-- Total request count
-- Error rate (5xx)
-- Latency percentiles (p50, p95, max)
+## Prerequisites
+- Python 3.8 or newer
+- Git (optional)
 
-## Tech Stack
-- Python 3
-- Standard library only (initially)
+## Quick install
+Create and activate a virtual environment, then install dependencies:
 
-## Project Structure
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+## Usage
+
+Run the CLI against a log file. By default, if no `--config` is supplied the
+tool enables `request_count`, `error_rate` and `latency` metrics.
+
+```bash
+python -m src.main sample_logs/access.log --config config/metrics.yaml
+
+# or (use default metrics)
+python -m src.main sample_logs/access.log
+```
+
+Options:
+- `--config`: path to a YAML file that lists enabled metrics under the `metrics` key
+- `--format`: output format (currently only `json`)
 
 ## Configuration
 
-Metrics can be enabled or disabled using a YAML configuration file.
-
-Example `metrics.yaml`:
+Example `config/metrics.yaml`:
 
 ```yaml
 metrics:
   - request_count
   - error_rate
+  - latency
+```
 
-## Usage
+Supported metric names are: `request_count`, `error_rate`, `latency`.
+If an unknown metric name is present the CLI will raise `ValueError`.
 
-Analyze a log file and generate metrics with config:
+## Sample output
 
-```bash
-python -m src.main sample_logs/access.log --config config/metrics.yaml
-
-## Sample Output
+When run, the program prints a JSON object summarizing computed metrics, for
+example:
 
 ```json
 {
@@ -52,3 +67,33 @@ python -m src.main sample_logs/access.log --config config/metrics.yaml
   "latency_p95_ms": 342,
   "latency_max_ms": 342
 }
+```
+
+Field notes:
+- `error_rate_percent`: percentage of error (5xx) responses
+- latency fields are in milliseconds
+
+## Running tests
+
+Run the test suite with `pytest`:
+
+```bash
+pytest
+```
+
+## Project layout
+
+See the `src/` package for implementation. Key modules:
+- `src/parser/log_parser.py` - log line -> event parsing
+- `src/metrics/*` - metric implementations and registry
+- `src/report/formatter.py` - output formatting
+- `src/config/loader.py` - YAML config loader
+
+## Contributing
+
+Contributions welcome — open an issue or submit a pull request. Add tests
+for any new metric or parser behavior. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+## License
+
+Licensed under the MIT License. See [LICENSE](LICENSE) for details.
