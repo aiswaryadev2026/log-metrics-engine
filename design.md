@@ -7,8 +7,18 @@ The Log Metrics Engine is a streaming log analyzer that processes application lo
 
 ### High-Level Architecture Diagram
 ```
-┌─────────────────┐
-│   Log File      │
+Log File
+↓
+LogParser (streaming, fault tolerant)
+↓
+LogEvent / None
+↓
+Core Engine
+↓
+Metrics (pluggable)
+↓
+Formatter (JSON)
+
 """Design document for Log Metrics Engine
 
 This document describes the high-level design, data flow, and
