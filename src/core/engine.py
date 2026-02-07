@@ -1,6 +1,9 @@
 from typing import List
 from src.parser.log_parser import LogParser
 from src.metrics.base import Metric
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def run_pipeline(logfile: str, metrics: List[Metric]) -> List[Metric]:

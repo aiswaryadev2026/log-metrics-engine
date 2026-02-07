@@ -2,6 +2,9 @@ from datetime import datetime
 from typing import Iterator
 
 from src.model.event import LogEvent
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class LogParser:
