@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from src.metrics.error_rate import ErrorRateMetric
 from src.model.event import LogEvent
 
@@ -7,7 +7,7 @@ def test_error_rate_metric():
     metric = ErrorRateMetric()
 
     ok_event = LogEvent(
-        timestamp=datetime.utcnow(),
+        timestamp=datetime.now(timezone.utc),
         method="GET",
         path="/",
         status=200,
@@ -15,7 +15,7 @@ def test_error_rate_metric():
     )
 
     error_event = LogEvent(
-        timestamp=datetime.utcnow(),
+        timestamp=datetime.now(timezone.utc),
         method="GET",
         path="/",
         status=500,

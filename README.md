@@ -22,3 +22,15 @@ percentiles.
 - Standard library only (initially)
 
 ## Project Structure
+
+## Sample Output
+
+```json
+{
+  "request_count": 4,
+  "error_count": 1,
+  "error_rate_percent": 25.0,
+  "latency_p50_ms": 116.5,
+  "latency_p95_ms": 342,
+  "latency_max_ms": 342
+}

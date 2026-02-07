@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from src.metrics.latency import LatencyMetric
 from src.model.event import LogEvent
 
@@ -11,7 +11,7 @@ def test_latency_metric_percentiles():
     for latency in latencies:
         metric.consume(
             LogEvent(
-                timestamp=datetime.utcnow(),
+                timestamp=datetime.now(timezone.utc),
                 method="GET",
                 path="/",
                 status=200,

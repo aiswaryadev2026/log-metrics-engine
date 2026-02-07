@@ -1,10 +1,10 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from src.model.event import LogEvent
 
 
 def test_log_event_creation():
     event = LogEvent(
-        timestamp=datetime.utcnow(),
+        timestamp=datetime.now(timezone.utc),
         method="GET",
         path="/api/test",
         status=200,
