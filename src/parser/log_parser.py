@@ -12,16 +12,20 @@ class LogParser:
     Streaming log parser that converts raw log lines into LogEvent objects.
     """
 
-    def parse(self, file_path: str) -> Iterator[LogEvent]:
-        """
-        Parse a log file line by line and yield LogEvent objects.
-        """
+    def parse(self, file_path):
         with open(file_path, "r") as file:
             for line_number, line in enumerate(file, start=1):
                 line = line.strip()
                 if not line:
                     continue
-                yield self._parse_line(line, line_number)
+                try:
+                    yield self._parse_line(line, line_number)
+                except ValueError as exc:
+                    logger.warning(
+                        "Skipping invalid log line %d: %s", line_number, exc
+                    )
+                    yield None
+
 
     def _parse_line(self, line: str, line_number: int) -> LogEvent:
         """
