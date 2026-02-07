@@ -23,6 +23,13 @@ percentiles.
 
 ## Project Structure
 
+## Usage
+
+Analyze a log file and generate metrics:
+
+```bash
+python -m src.main sample_logs/access.log
+
 ## Sample Output
 
 ```json
