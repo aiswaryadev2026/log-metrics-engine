@@ -7,6 +7,7 @@ from src.metrics.latency import LatencyMetric
 from src.report.formatter import JsonReportFormatter
 from src.config.loader import load_config
 from src.metrics.registry import METRIC_REGISTRY
+from src.core.engine import run_pipeline
 import logging
 
 
@@ -55,12 +56,11 @@ def main():
             raise ValueError(f"Unknown metric: {name}")
         metrics.append(metric_cls())
 
-    for event in parser.parse(args.logfile):
-        for metric in metrics:
-            metric.consume(event)
+    metrics = run_pipeline(args.logfile, metrics)
 
     formatter = JsonReportFormatter()
     print(formatter.format(metrics))
+
 
 
 
