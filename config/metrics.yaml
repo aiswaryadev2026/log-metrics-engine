@@ -2,3 +2,4 @@ metrics:
   - request_count
   - error_rate
   - latency
+  
